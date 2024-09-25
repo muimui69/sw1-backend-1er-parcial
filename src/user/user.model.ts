@@ -1,6 +1,15 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, registerEnumType } from '@nestjs/graphql';
 
-@ObjectType()  // Decorador para indicar que esta clase es un tipo de GraphQL
+export enum UserRole {
+    COLLABORATOR = 'COLABORADOR',
+    HOST = 'ANFITRION',
+}
+
+registerEnumType(UserRole, {
+    name: 'UserRole',
+});
+
+@ObjectType()
 export class User {
     @Field(() => ID)
     id: string;
@@ -14,8 +23,8 @@ export class User {
     @Field({ nullable: true })
     password?: string;
 
-    @Field(() => [String], { nullable: true })
-    roles?: string[];
+    @Field(() => UserRole)
+    role: UserRole;
 
     @Field({ nullable: true })
     createdAt?: Date;
