@@ -4,10 +4,10 @@ import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { RoomModule } from './room/room.module';
-import { DiagramModule } from './diagram/diagram.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { DiagramGateway } from './diagram/diagram.gateway';
 
 
 @Module({
@@ -25,15 +25,14 @@ import { UserModule } from './user/user.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
-      playground: true,  // Para habilitar GraphQL Playground
-      path: '/graphql',  // Ruta de la API GraphQL
+      playground: true,
+      path: '/graphql',
     }),
     UserModule,
     RoomModule,
-    DiagramModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, DiagramGateway],
 })
 export class AppModule { }
 
