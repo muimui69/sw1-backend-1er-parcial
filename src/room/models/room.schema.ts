@@ -1,6 +1,6 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { User } from '../user/schema/user.schema';  // Asumiendo que tienes un esquema User
+import { User } from 'src/user/models/user.schema';
 
 export type RoomDocument = Room & Document;
 

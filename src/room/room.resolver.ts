@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { RoomService } from './room.service';
 import { CreateRoomInput } from './dto/create-room.input';
-import { Room } from './room.model';
+import { Room } from './models/room.model';
 
 @Resolver(() => Room)
 export class RoomResolver {
