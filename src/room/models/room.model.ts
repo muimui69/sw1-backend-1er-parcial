@@ -19,7 +19,7 @@ export class Room {
     description?: string;
 
     @Field()
-    code: string;
+    code?: string;
 
     @Field({ nullable: true })
     xml?: string;

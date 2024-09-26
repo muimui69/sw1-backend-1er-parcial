@@ -23,7 +23,7 @@ export class Room {
     description?: string;
 
     @Prop()
-    code: string;
+    code?: string;
 
     @Prop()
     xml?: string;

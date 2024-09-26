@@ -9,7 +9,7 @@ export class CreateRoomInput {
     hostId: string;
 
     @Field({ nullable: true })
-    description?: string;
+    description: string;
 
     @Field({ nullable: true })
     code?: string;

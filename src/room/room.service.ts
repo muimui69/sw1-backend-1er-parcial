@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateRoomInput } from './dto/create-room.input';
 import { Room, RoomDocument } from './models/room.schema';
+import { v4 as uuidv4 } from 'uuid';
+
 
 @Injectable()
 export class RoomService {
@@ -31,10 +33,14 @@ export class RoomService {
 
 
     async create(createRoomInput: CreateRoomInput): Promise<Room> {
+        const roomCode = createRoomInput.code || this.generateRoomCode();
+
         const newRoom = new this.roomModel({
             ...createRoomInput,
             host: createRoomInput.hostId,
+            code: roomCode
         });
+
         await newRoom.save();
 
         return this.roomModel.findById(newRoom._id).populate('host').exec();
@@ -43,6 +49,7 @@ export class RoomService {
 
     async addCollaborator(roomId: string, userId: string): Promise<Room> {
         const room = await this.roomModel.findById(roomId).exec();
+
         if (!room) {
             throw new Error('Room not found');
         }
@@ -51,11 +58,20 @@ export class RoomService {
             throw new Error('The host cannot be added as a collaborator');
         }
 
+        const isAlreadyCollaborator = room.participants.some(participant => participant.toString() === userId);
+
+        if (isAlreadyCollaborator) {
+            throw new Error('User is already a collaborator in this room');
+        }
+
         return this.roomModel
             .findByIdAndUpdate(roomId, { $push: { participants: userId } }, { new: true })
             .populate('host participants')
             .exec();
     }
 
+    private generateRoomCode(): string {
+        return uuidv4();
+    }
 
 }
