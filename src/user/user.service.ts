@@ -18,4 +18,9 @@ export class UserService {
         const newUser = new this.userModel(createUserInput);
         return newUser.save();
     }
+
+    async findByEmail(email: string): Promise<User> {
+        return this.userModel.findOne({ email });
+    }
+
 }

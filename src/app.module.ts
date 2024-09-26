@@ -9,6 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { DiagramModule } from './diagram/diagram.module';
 import { DiagramGateway } from './diagram/diagram.gateway';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,9 +29,10 @@ import { DiagramGateway } from './diagram/diagram.gateway';
       playground: true,
       path: '/graphql',
     }),
-    DiagramModule,
+    AuthModule,
     UserModule,
     RoomModule,
+    DiagramModule,
   ],
   controllers: [AppController],
   providers: [AppService, DiagramGateway],

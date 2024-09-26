@@ -9,12 +9,12 @@ export class RoomResolver {
 
     @Query(() => [Room])
     async getRooms() {
-        return this.roomService.findAll();  // Llamas al servicio aquí
+        return this.roomService.findAll();
     }
 
     @Mutation(() => Room)
     async createRoom(@Args('createRoomInput') createRoomInput: CreateRoomInput) {
-        return this.roomService.create(createRoomInput);  // Llamas al servicio aquí
+        return this.roomService.create(createRoomInput);
     }
 
     @Mutation(() => Room)
@@ -22,27 +22,24 @@ export class RoomResolver {
         @Args('roomId') salaId: string,
         @Args('userId') userId: string,
     ) {
-        return this.roomService.addCollaborator(salaId, userId);  // Llamas al servicio aquí
+        return this.roomService.addCollaborator(salaId, userId);
     }
 
     @Mutation(() => Room)
     async closeRoom(@Args('roomId') roomId: string, @Args('hostId') hostId: string) {
-        // Encontramos la sala
         const room = await this.roomService.findById(roomId);
 
-        // Verificamos si la sala existe
         if (!room) {
             throw new Error('Room not found');
         }
 
-        // Verificamos si el usuario es el anfitrión
         if (room.host.toString() !== hostId) {
             throw new Error('Only the host can close the room');
         }
 
-        // Cambiamos el estado de la sala a cerrada
         return this.roomService.updateRoomStatus(roomId, false);
     }
+
 
     @Mutation(() => Room)
     async openRoom(@Args('roomId') roomId: string, @Args('hostId') hostId: string) {

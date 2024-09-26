@@ -4,18 +4,19 @@ import { User } from 'src/user/models/user.schema';
 
 export type RoomDocument = Room & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Room {
-    @Prop({ required: true, type: Types.ObjectId, ref: 'User' })  // ObjectId referencia a User
+    @Prop({ required: true, type: Types.ObjectId, ref: 'User' })
     host: User;
 
-    @Prop()
+    @Prop({ required: true })
     title: string;
 
-    @Prop({ type: [Types.ObjectId], ref: 'User', default: [] })
+    @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })  // Referencia a múltiples usuarios (participantes)
     participants: User[];
 
-    @Prop({ default: true })  // Definimos que la sala esté abierta por defecto
+
+    @Prop({ default: true })
     isOpen: boolean;
 
     @Prop()

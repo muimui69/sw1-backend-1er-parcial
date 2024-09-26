@@ -12,15 +12,23 @@ export class Room {
     @Field(() => User)
     host: User;
 
-    @Field(() => [String], { nullable: true })
-    participants?: string[];
+    @Field(() => [User])
+    participants: User[];
 
     @Field({ nullable: true })
     description?: string;
 
-    @Field({ nullable: true })
-    code?: string;
+    @Field()
+    code: string;
 
     @Field({ nullable: true })
     xml?: string;
+
+    @Field({ nullable: true })
+    createdAt?: Date;
+
+    @Field({ nullable: true })
+    updatedAt?: Date;
 }
+
+

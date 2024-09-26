@@ -5,7 +5,7 @@ export class CreateRoomInput {
     @Field()
     title: string;
 
-    @Field()  // Esto será el ObjectId del host
+    @Field()
     hostId: string;
 
     @Field({ nullable: true })

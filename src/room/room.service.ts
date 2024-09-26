@@ -7,7 +7,7 @@ import { Room, RoomDocument } from './models/room.schema';
 @Injectable()
 export class RoomService {
     constructor(
-        @InjectModel('Room') private roomModel: Model<RoomDocument>,  // Aquí se inyecta el RoomModel
+        @InjectModel('Room') private roomModel: Model<RoomDocument>,
     ) { }
 
     async findById(roomId: string): Promise<Room> {
@@ -19,8 +19,16 @@ export class RoomService {
     }
 
     async findAll(): Promise<Room[]> {
-        return this.roomModel.find().populate('host participants').exec();
+        return this.roomModel
+            .find()
+            .populate('host')
+            .populate({
+                path: 'participants',
+                model: 'User'
+            })
+            .exec();
     }
+
 
     async create(createRoomInput: CreateRoomInput): Promise<Room> {
         const newRoom = new this.roomModel({
@@ -48,5 +56,6 @@ export class RoomService {
             .populate('host participants')
             .exec();
     }
+
 
 }
