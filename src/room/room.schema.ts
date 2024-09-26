@@ -1,28 +1,28 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { User } from '../user/user.schema';
+import { User } from '../user/user.schema';  // Asumiendo que tienes un esquema User
 
 export type RoomDocument = Room & Document;
 
 @Schema()
 export class Room {
-    @Prop({ required: true })
-    title: string;
-
-    @Prop({ required: true, type: Types.ObjectId, ref: 'User' })
+    @Prop({ required: true, type: Types.ObjectId, ref: 'User' })  // ObjectId referencia a User
     host: User;
 
-    @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
-    participants: User[];
+    @Prop()
+    title: string;
 
-    @Prop({ required: true, unique: true })
+    @Prop({ type: [Types.ObjectId], ref: 'User' })  // ObjectIds para los participantes (si es necesario)
+    participants: Types.ObjectId[];
+
+    @Prop()
+    description: string;
+
+    @Prop()
     code: string;
 
     @Prop()
     xml: string;
-
-    @Prop()
-    description: string;
 }
 
 export const RoomSchema = SchemaFactory.createForClass(Room);

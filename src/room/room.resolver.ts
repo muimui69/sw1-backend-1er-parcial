@@ -9,12 +9,12 @@ export class RoomResolver {
 
     @Query(() => [Room])
     async getRooms() {
-        return this.roomService.findAll();
+        return this.roomService.findAll();  // Llamas al servicio aquí
     }
 
     @Mutation(() => Room)
     async createRoom(@Args('createRoomInput') createRoomInput: CreateRoomInput) {
-        return this.roomService.create(createRoomInput);
+        return this.roomService.create(createRoomInput);  // Llamas al servicio aquí
     }
 
     @Mutation(() => Room)
@@ -22,6 +22,7 @@ export class RoomResolver {
         @Args('roomId') salaId: string,
         @Args('userId') userId: string,
     ) {
-        return this.roomService.addCollaborator(salaId, userId);
+        return this.roomService.addCollaborator(salaId, userId);  // Llamas al servicio aquí
     }
 }
+

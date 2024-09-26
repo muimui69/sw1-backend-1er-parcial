@@ -11,13 +11,19 @@ export class RoomService {
     ) { }
 
     async findAll(): Promise<Room[]> {
-        return this.roomModel.find().populate('anfitrion participantes').exec();
+        return this.roomModel.find().populate('host participants').exec();
     }
 
     async create(createRoomInput: CreateRoomInput): Promise<Room> {
-        const newSala = new this.roomModel(createRoomInput);
-        return newSala.save();
+        const newRoom = new this.roomModel({
+            ...createRoomInput,
+            host: createRoomInput.hostId,
+        });
+        await newRoom.save();
+
+        return this.roomModel.findById(newRoom._id).populate('host').exec();
     }
+
 
     async addCollaborator(roomId: string, userId: string): Promise<Room> {
         return this.roomModel

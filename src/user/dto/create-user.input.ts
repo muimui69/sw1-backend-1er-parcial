@@ -1,4 +1,6 @@
 import { InputType, Field } from '@nestjs/graphql';
+import { UserRole } from '../user.model';
+
 
 @InputType()
 export class CreateUserInput {
@@ -11,6 +13,6 @@ export class CreateUserInput {
     @Field()
     password: string;
 
-    @Field()
-    rol?: string;
+    @Field(() => UserRole, { nullable: true }) // Ahora el rol es opcional, pero solo puede ser uno de los valores del enum
+    role?: UserRole;
 }

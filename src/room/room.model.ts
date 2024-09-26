@@ -1,4 +1,5 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { User } from '../user/user.model';  // Asumiendo que tienes un modelo User
 
 @ObjectType()
 export class Room {
@@ -8,8 +9,8 @@ export class Room {
     @Field()
     title: string;
 
-    @Field()
-    hostId: string;
+    @Field(() => User) // Aquí referenciamos a un User, para usar el ObjectId en MongoDB
+    host: User;
 
     @Field(() => [String], { nullable: true })
     participants?: string[];
