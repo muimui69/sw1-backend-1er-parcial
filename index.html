@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test</title>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const socket = io("http://localhost:3000");
+
+            socket.on("connect", () => {
+                console.log("Connected to WebSocket server with ID:", socket.id);
+            });
+
+            socket.on("disconnect", () => {
+                console.log("Disconnected from WebSocket server");
+            });
+
+            // Listen to any custom events from the server
+            socket.on("diagramUpdate", (data) => {
+                console.log("Received diagramUpdate:", data);
+            });
+
+            // Send a test event to the server
+            document.getElementById("send").addEventListener("click", () => {
+                socket.emit("diagramUpdate", { message: "Hello from client" });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>WebSocket Test</h1>
+    <button id="send">Send Test Message</button>
+</body>
+</html>

@@ -1,5 +1,5 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { User } from '../user/user.model';  // Asumiendo que tienes un modelo User
+import { User } from '../user/model/user.model';  // Asumiendo que tienes un modelo User
 
 @ObjectType()
 export class Room {
@@ -9,7 +9,7 @@ export class Room {
     @Field()
     title: string;
 
-    @Field(() => User) // Aquí referenciamos a un User, para usar el ObjectId en MongoDB
+    @Field(() => User)
     host: User;
 
     @Field(() => [String], { nullable: true })
@@ -22,5 +22,5 @@ export class Room {
     code?: string;
 
     @Field({ nullable: true })
-    xml?: string; // XML code for the room (optional)
+    xml?: string;
 }

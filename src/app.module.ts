@@ -7,8 +7,8 @@ import { RoomModule } from './room/room.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { DiagramModule } from './diagram/diagram.module';
 import { DiagramGateway } from './diagram/diagram.gateway';
-
 
 @Module({
   imports: [
@@ -28,6 +28,7 @@ import { DiagramGateway } from './diagram/diagram.gateway';
       playground: true,
       path: '/graphql',
     }),
+    DiagramModule,
     UserModule,
     RoomModule,
   ],
@@ -35,5 +36,3 @@ import { DiagramGateway } from './diagram/diagram.gateway';
   providers: [AppService, DiagramGateway],
 })
 export class AppModule { }
-
-

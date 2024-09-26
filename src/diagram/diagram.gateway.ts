@@ -1,32 +1,29 @@
 import {
-    SubscribeMessage,
-    WebSocketGateway,
-    WebSocketServer,
-    OnGatewayConnection,
-    OnGatewayDisconnect,
-    MessageBody,
+  WebSocketGateway,
+  WebSocketServer,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
 } from '@nestjs/websockets';
+import { DiagramService } from './diagram.service';
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
-    cors: {
-        origin: '*',
-    },
+  cors: {
+    origin: '*',
+  },
+
 })
 export class DiagramGateway implements OnGatewayConnection, OnGatewayDisconnect {
-    @WebSocketServer()
-    server: Server;
+  @WebSocketServer()
+  server: Server;
 
-    handleConnection(client: Socket) {
-        console.log(`Client connected: ${client.id}`);
-    }
+  constructor(private readonly diagramService: DiagramService) { }
 
-    handleDisconnect(client: Socket) {
-        console.log(`Client disconnected: ${client.id}`);
-    }
+  handleConnection(client: Socket) {
+    console.log("Client connected: " + client.id);
+  }
 
-    @SubscribeMessage('diagramUpdate')
-    handleDiagramUpdate(@MessageBody() data: any): void {
-        this.server.emit('diagramUpdate', data);
-    }
+  handleDisconnect(client: Socket) {
+    console.log("Client disconnected: " + client.id);
+  }
 }
