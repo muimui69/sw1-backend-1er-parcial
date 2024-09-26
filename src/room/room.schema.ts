@@ -12,17 +12,20 @@ export class Room {
     @Prop()
     title: string;
 
-    @Prop({ type: [Types.ObjectId], ref: 'User' })  // ObjectIds para los participantes (si es necesario)
-    participants: Types.ObjectId[];
+    @Prop({ type: [Types.ObjectId], ref: 'User', default: [] })
+    participants: User[];
+
+    @Prop({ default: true })  // Definimos que la sala esté abierta por defecto
+    isOpen: boolean;
 
     @Prop()
-    description: string;
+    description?: string;
 
     @Prop()
     code: string;
 
     @Prop()
-    xml: string;
+    xml?: string;
 }
 
 export const RoomSchema = SchemaFactory.createForClass(Room);

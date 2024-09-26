@@ -10,6 +10,14 @@ export class RoomService {
         @InjectModel('Room') private roomModel: Model<RoomDocument>,  // Aquí se inyecta el RoomModel
     ) { }
 
+    async findById(roomId: string): Promise<Room> {
+        return this.roomModel.findById(roomId).populate('host participants').exec();
+    }
+
+    async updateRoomStatus(roomId: string, isOpen: boolean): Promise<Room> {
+        return this.roomModel.findByIdAndUpdate(roomId, { isOpen }, { new: true }).exec();
+    }
+
     async findAll(): Promise<Room[]> {
         return this.roomModel.find().populate('host participants').exec();
     }
@@ -26,8 +34,19 @@ export class RoomService {
 
 
     async addCollaborator(roomId: string, userId: string): Promise<Room> {
+        const room = await this.roomModel.findById(roomId).exec();
+        if (!room) {
+            throw new Error('Room not found');
+        }
+
+        if (room.host.toString() === userId) {
+            throw new Error('The host cannot be added as a collaborator');
+        }
+
         return this.roomModel
-            .findByIdAndUpdate(roomId, { $push: { participants: userId } })
+            .findByIdAndUpdate(roomId, { $push: { participants: userId } }, { new: true })
+            .populate('host participants')
             .exec();
     }
+
 }
