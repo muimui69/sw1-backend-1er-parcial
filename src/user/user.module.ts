@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
-import { User, UserSchema } from './models/user.schema';
+import { User, UserSchema } from './schemas/user.schema';
 
 @Module({
     imports: [

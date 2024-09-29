@@ -1,5 +1,8 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from 'src/user/models/user.model';
+import { Invitation } from './invitation.model';
+import { Participant } from './participant.model';
+
 
 @ObjectType()
 export class Room {
@@ -12,8 +15,11 @@ export class Room {
     @Field(() => User)
     host: User;
 
-    @Field(() => [User])
-    participants: User[];
+    @Field(() => [Participant])
+    participants: Participant[];
+
+    @Field(() => [Invitation])
+    invitations: Invitation[];
 
     @Field({ nullable: true })
     description?: string;

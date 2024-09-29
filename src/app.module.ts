@@ -10,6 +10,8 @@ import { UserModule } from './user/user.module';
 import { DiagramModule } from './diagram/diagram.module';
 import { DiagramGateway } from './diagram/diagram.gateway';
 import { AuthModule } from './auth/auth.module';
+import { InviteService } from './invite/invite.service';
+import { InviteModule } from './invite/invite.module';
 
 @Module({
   imports: [
@@ -33,8 +35,9 @@ import { AuthModule } from './auth/auth.module';
     UserModule,
     RoomModule,
     DiagramModule,
+    InviteModule,
   ],
   controllers: [AppController],
-  providers: [AppService, DiagramGateway],
+  providers: [AppService, DiagramGateway, InviteService],
 })
 export class AppModule { }
