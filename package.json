@@ -34,6 +34,7 @@
     "@nestjs/platform-express": "^10.4.4",
     "@nestjs/platform-socket.io": "^10.4.4",
     "@nestjs/websockets": "^10.4.4",
+    "apollo-server-express": "^3.13.0",
     "bcryptjs": "^2.4.3",
     "graphql": "^16.9.0",
     "handlebars": "^4.7.8",
