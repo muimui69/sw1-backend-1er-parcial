@@ -11,7 +11,6 @@ import { Server, Socket } from 'socket.io';
   cors: {
     origin: '*',
   },
-
 })
 export class DiagramGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
@@ -21,9 +20,24 @@ export class DiagramGateway implements OnGatewayConnection, OnGatewayDisconnect 
 
   handleConnection(client: Socket) {
     console.log("Client connected: " + client.id);
+    client.on('shape-move', (data) => {
+      client.broadcast.emit('shape-move', data);
+    });
+
+    client.on('shape-add', (data) => {
+      client.broadcast.emit('shape-add', data);
+    });
+
+
+    client.on('shape-remove', (data) => {
+      client.broadcast.emit('shape-remove', data);
+    });
+
   }
 
   handleDisconnect(client: Socket) {
     console.log("Client disconnected: " + client.id);
   }
+
+
 }

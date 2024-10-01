@@ -22,6 +22,9 @@ export class Room {
     invitations: Invitation[];
 
     @Field({ nullable: true })
+    isOpen?: boolean;
+
+    @Field({ nullable: true })
     description?: string;
 
     @Field()
