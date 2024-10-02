@@ -21,4 +21,5 @@ export class AuthResolver {
     ): Promise<AuthResponse> {
         return this.authService.login(loginInput);
     }
+
 }

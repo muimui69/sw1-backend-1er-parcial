@@ -1,6 +1,6 @@
 export type Invitation = {
     email: string;
-    status: 'PENDING' | 'ACCEPTED';
+    status: 'PENDING' | 'ACCEPTED' | 'CANCELED';
 };
 
 

@@ -6,6 +6,7 @@ import { CreateUserInput } from '../user/dto/create-user.input';
 import { LoginInput } from './dto/login.input';
 import { AuthResponse } from './dto/auth-response.dto';
 import { User } from 'src/user/models/user.model';
+import { UserRole } from '@/common/enums/user-role.enum';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +20,7 @@ export class AuthService {
         const user = await this.userService.create({
             ...createUserInput,
             password: hashedPassword,
+            role: UserRole.HOST,
         }) as User;
 
         return this.generateToken(user);

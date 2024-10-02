@@ -15,8 +15,8 @@ export class User {
     @Field({ nullable: true })
     password?: string;
 
-    @Field(() => UserRole)
-    role: UserRole;
+    @Field(() => UserRole, { nullable: true })
+    role?: UserRole;
 
     @Field({ nullable: true })
     createdAt?: Date;
