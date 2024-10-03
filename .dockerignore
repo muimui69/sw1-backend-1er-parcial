@@ -1,0 +1,20 @@
+# Ignorar node_modules y carpetas relacionadas con dependencias
+node_modules
+pnpm-lock.yaml
+
+# Ignorar archivos de configuración y de entorno locales
+.env
+.env.*.local
+
+# Ignorar cachés de compilación y otros archivos generados
+dist
+*.log
+.nyc_output
+coverage
+.cache
+
+# Ignorar archivos de control de versiones y configuraciones locales
+.git
+.gitignore
+.idea
+.vscode

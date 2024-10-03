@@ -1,4 +1,4 @@
-version: '3.8'
+version: '4'
 
 services:
   backend:
@@ -7,11 +7,14 @@ services:
       dockerfile: Dockerfile
     environment:
       - PORT=4000
+      - MONGODB_URI_DEV=${MONGODB_URI_DEV}
       - MONGODB_URI_PROD=${MONGODB_URI_PROD}
       - JWT_SECRET=${JWT_SECRET}
       - HOST_EMAIL=${HOST_EMAIL}
       - ACCOUNT_EMAIL=${ACCOUNT_EMAIL}
       - PASSWORD_EMAIL=${PASSWORD_EMAIL}
+      - NODE_ENV=production
     ports:
       - '4000:4000'
     command: node dist/main
+    restart: unless-stopped

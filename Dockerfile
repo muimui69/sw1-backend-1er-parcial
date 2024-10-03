@@ -5,13 +5,16 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Copiar archivos de configuración del proyecto
-COPY package.json pnpm-lock.yaml ./
+COPY package.json ./
 
 # Instalar pnpm globalmente
 RUN npm install -g pnpm
 
 # Instalar dependencias (incluye las de desarrollo)
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --no-frozen-lockfile
+
+# Instalar NestJS CLI para ejecutar comandos de Nest durante la build
+RUN pnpm add @nestjs/cli
 
 # Copiar el resto de los archivos del proyecto
 COPY . .
