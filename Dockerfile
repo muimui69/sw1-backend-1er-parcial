@@ -1,37 +1,37 @@
-# Etapa de construcción
+# Fase de construcción
 FROM node:18-alpine AS builder
 
-# Configurar el directorio de trabajo
+# Establecer directorio de trabajo
 WORKDIR /app
 
-# Copiar package.json y pnpm-lock.yaml
+# Copiar archivos de configuración del proyecto
 COPY package.json pnpm-lock.yaml ./
 
 # Instalar pnpm globalmente
 RUN npm install -g pnpm
 
-# Instalar todas las dependencias, incluidas las de desarrollo (como @nestjs/cli)
-RUN pnpm install
+# Instalar dependencias (incluye las de desarrollo)
+RUN pnpm install --frozen-lockfile
 
-# Copiar todo el código fuente
+# Copiar el resto de los archivos del proyecto
 COPY . .
 
-# Construir la aplicación
+# Construir el proyecto
 RUN pnpm run build
 
-# Etapa de producción
+# Fase final: producción
 FROM node:18-alpine AS production
 
-# Configurar el directorio de trabajo
+# Establecer directorio de trabajo
 WORKDIR /app
 
-# Copiar las dependencias de producción y el build desde la etapa anterior
-COPY --from=builder /app/node_modules /app/node_modules
-COPY --from=builder /app/dist /app/dist
-COPY --from=builder /app/package.json /app/package.json
+# Copiar solo lo necesario desde la fase de build
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
 
 # Exponer el puerto
 EXPOSE 4000
 
-# Comando para iniciar la aplicación en producción
+# Comando por defecto para ejecutar la aplicación
 CMD ["node", "dist/main"]
