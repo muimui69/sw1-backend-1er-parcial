@@ -5,13 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - .env
     environment:
       - PORT=${PORT}
       - MONGODB_URI_DEV=${MONGODB_URI_DEV}
       - MONGODB_URI_PROD=${MONGODB_URI_PROD}
-      - JWT_SECRET=${JWT_SECRET}
+      - JWT_SECRET=dominicagaa
       - HOST_EMAIL=${HOST_EMAIL}
       - ACCOUNT_EMAIL=${ACCOUNT_EMAIL}
       - PASSWORD_EMAIL=${PASSWORD_EMAIL}
