@@ -15,12 +15,8 @@ import { AuthResolver } from './auth.resolver';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      // useFactory: (configService: ConfigService) => ({
-      //   secret: configService.get<string>('JWT_SECRET'),
-      //   signOptions: { expiresIn: '1d' },
-      // }),
-      useFactory: () => ({
-        secret: "dominicagaa",
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
         signOptions: { expiresIn: '1d' },
       }),
     }),
