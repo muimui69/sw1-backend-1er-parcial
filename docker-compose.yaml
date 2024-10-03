@@ -1,0 +1,15 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=4000
+      - MONGODB_URI_PROD=${MONGODB_URI_PROD}
+      - JWT_SECRET=${JWT_SECRET}
+      - HOST_EMAIL=${HOST_EMAIL}
+      - ACCOUNT_EMAIL=${ACCOUNT_EMAIL}
+      - PASSWORD_EMAIL=${PASSWORD_EMAIL}
+    ports:
+      - '4000:4000'
+    command: node dist/main

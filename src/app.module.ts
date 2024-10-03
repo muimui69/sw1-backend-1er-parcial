@@ -22,7 +22,9 @@ import { InviteModule } from './invite/invite.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGODB_URI'),
+        uri: process.env.NODE_ENV === 'production'
+          ? configService.get<string>('MONGODB_URI_PROD')
+          : configService.get<string>('MONGODB_URI_DEV'),
       }),
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
