@@ -29,6 +29,22 @@ export class RoomService {
             .exec();
     }
 
+    async findAllRoomsByUser(userId: string): Promise<Room[]> {
+        return this.roomModel
+            .find({ host: userId }) // Buscar solo las salas donde el usuario es el host
+            .populate('host') // Popula los detalles del host
+            .exec();
+    }
+
+
+    async findRoomsByParticipant(userId: string): Promise<Room[]> {
+        return this.roomModel
+            .find({ 'participants.user': userId }) // Busca por usuario en los participantes
+            .populate('host')
+            .populate('participants.user')
+            .exec();
+    }
+
 
     async findAllInvitations(roomId: string): Promise<Invitation[]> {
         const room = await this.roomModel.findById(roomId).exec();

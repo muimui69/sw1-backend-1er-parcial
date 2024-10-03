@@ -9,8 +9,22 @@ export class RoomResolver {
     constructor(private readonly roomService: RoomService) { }
 
     @Query(() => [Room])
-    async getRooms() {
+    async Rooms() {
         return this.roomService.findAll();
+    }
+
+    @Query(() => [Room])
+    async RoomByUser(
+        @Args('userId') userId: string
+    ) {
+        return this.roomService.findAllRoomsByUser(userId);
+    }
+
+    @Query(() => [Room])
+    async RoomByHostInvitated(
+        @Args('userId') userId: string
+    ) {
+        return this.roomService.findRoomsByParticipant(userId);
     }
 
     @Query(() => [Invitation])
@@ -22,15 +36,6 @@ export class RoomResolver {
     async createRoom(@Args('createRoomInput') createRoomInput: CreateRoomInput) {
         return this.roomService.create(createRoomInput);
     }
-
-
-    // @Mutation(() => Room)
-    // async addCollaborator(
-    //     @Args('roomId') salaId: string,
-    //     @Args('email') email: string[],
-    // ) {
-    //     return this.roomService.addCollaborators(salaId, email);
-    // }
 
 
     @Mutation(() => Room)
