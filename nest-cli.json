@@ -6,7 +6,7 @@
     "deleteOutDir": true,
     "assets": [
       {
-        "include": "invite/templates/**/*",
+        "include": "invite/templates/**/*.hbs",
         "outDir": "dist"
       }
     ]
