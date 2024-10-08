@@ -19,10 +19,6 @@ RUN pnpm add @nestjs/cli
 # Copiar el resto de los archivos del proyecto
 COPY . .
 
-
-# Copiar las plantillas .hbs a la carpeta dist
-RUN mkdir -p dist/invite/templates && cp -r src/invite/templates dist/invite/templates
-
 # Construir el proyecto
 RUN pnpm run build
 

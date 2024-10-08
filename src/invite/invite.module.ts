@@ -23,7 +23,7 @@ import { InviteService } from './invite.service';
                 },
                 template: {
                     // dir: join(process.cwd(), 'src/invite/templates'),
-                    dir: join(__dirname, 'templates'),
+                    dir: join(__dirname, 'app/src/invite/templates'),
                     adapter: new HandlebarsAdapter(),
                     options: {
                         strict: true,
