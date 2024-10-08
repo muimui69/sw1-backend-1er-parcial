@@ -5,7 +5,7 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Copiar archivos de configuración del proyecto
-COPY package.json pnpm-lock.yaml ./
+COPY package.json ./
 
 # Instalar pnpm globalmente
 RUN npm install -g pnpm
@@ -19,11 +19,12 @@ RUN pnpm add @nestjs/cli
 # Copiar el resto de los archivos del proyecto
 COPY . .
 
-# Construir el proyecto
-RUN pnpm run build
 
 # Copiar las plantillas .hbs a la carpeta dist
 RUN mkdir -p dist/invite/templates && cp -r src/invite/templates dist/invite/templates
+
+# Construir el proyecto
+RUN pnpm run build
 
 # Fase final: producción
 FROM node:18-alpine AS production

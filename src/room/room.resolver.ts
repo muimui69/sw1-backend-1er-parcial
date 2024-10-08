@@ -43,6 +43,7 @@ export class RoomResolver {
         @Args('roomId') roomId: string,
         @Args({ name: 'emails', type: () => [String] }) emails: string[],
     ) {
+        console.log(emails)
         return this.roomService.addCollaborators(roomId, emails);
     }
 
