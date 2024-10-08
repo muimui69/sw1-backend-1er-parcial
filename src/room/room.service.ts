@@ -46,11 +46,21 @@ export class RoomService {
     }
 
 
-    async findAllInvitations(roomId: string): Promise<Invitation[]> {
-        const room = await this.roomModel.findById(roomId).exec();
-        if (!room) throw new Error('Room not found');
-        return room.invitations;
+    async findAllInvitationsByHost(userId: string): Promise<Invitation[]> {
+        const rooms = await this.roomModel.find({ host: userId }).exec();
+
+        if (!rooms.length) {
+            throw new Error('No rooms found for this host');
+        }
+
+        const allInvitations: Invitation[] = [];
+        rooms.forEach(room => {
+            allInvitations.push(...room.invitations);
+        });
+
+        return allInvitations;
     }
+
 
 
     async findById(roomId: string): Promise<Room> {

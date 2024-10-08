@@ -28,8 +28,8 @@ export class RoomResolver {
     }
 
     @Query(() => [Invitation])
-    async getAllInvitations(@Args('roomId') roomId: string) {
-        return this.roomService.findAllInvitations(roomId);
+    async InvitationsByHost(@Args('userId') userId: string) {
+        return this.roomService.findAllInvitationsByHost(userId);
     }
 
     @Mutation(() => Room)

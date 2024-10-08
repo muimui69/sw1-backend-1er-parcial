@@ -12,7 +12,8 @@ import { InviteService } from './invite.service';
             useFactory: async (config: ConfigService) => ({
                 transport: {
                     host: config.get<string>("HOST_EMAIL"),
-                    secure: false,
+                    port: 465,
+                    secure: true,
                     auth: {
                         user: config.get<string>("ACCOUNT_EMAIL"),
                         pass: config.get<string>("PASSWORD_EMAIL"),
