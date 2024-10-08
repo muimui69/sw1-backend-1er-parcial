@@ -5,7 +5,7 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Copiar archivos de configuración del proyecto
-COPY package.json ./
+COPY package.json pnpm-lock.yaml ./
 
 # Instalar pnpm globalmente
 RUN npm install -g pnpm
@@ -21,6 +21,9 @@ COPY . .
 
 # Construir el proyecto
 RUN pnpm run build
+
+# Copiar las plantillas .hbs a la carpeta dist
+RUN mkdir -p dist/invite/templates && cp -r src/invite/templates dist/invite/templates
 
 # Fase final: producción
 FROM node:18-alpine AS production

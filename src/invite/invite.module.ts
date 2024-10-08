@@ -22,7 +22,8 @@ import { InviteService } from './invite.service';
                     from: `"No Reply" <${config.get<string>('ACCOUNT_EMAIL')}>`,
                 },
                 template: {
-                    dir: join(process.cwd(), 'src/invite/templates'),
+                    // dir: join(process.cwd(), 'src/invite/templates'),
+                    dir: join(__dirname, 'templates'),
                     adapter: new HandlebarsAdapter(),
                     options: {
                         strict: true,
