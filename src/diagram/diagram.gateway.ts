@@ -65,6 +65,42 @@ export class DiagramGateway implements OnGatewayConnection, OnGatewayDisconnect 
         client.to(room).emit('shape-update', data);
       }
     });
+
+    client.on('link-add', (linkData) => {
+      console.log('Servidor recibió link-add aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:', linkData); // Verifica que el servidor recibe el enlace
+
+      const room = client.data.room;
+      if (room) {
+        client.to(room).emit('link-add', linkData);
+        console.log(`Enlace reenviado a la sala: ${room}`);
+      } else {
+        console.log('Cliente no está en ninguna sala.');
+      }
+    });
+
+    client.on('link-move', (linkData) => {
+      console.log('Servidor recibió link-update:', linkData);
+      const room = client.data.room;
+      if (room) {
+        client.to(room).emit('link-move', linkData);
+      }
+    });
+
+    client.on('link-remove', (data) => {
+      console.log('Servidor recibió link-remove:', data);
+      const room = client.data.room;
+      if (room) {
+        client.to(room).emit('link-remove', data);
+      }
+    });
+
+    client.on('link-update', (data) => {
+      console.log('Servidor recibió link-update:', data);
+      const room = client.data.room;
+      if (room) {
+        client.to(room).emit('link-update', data);
+      }
+    });
   }
 
   handleDisconnect(client: Socket) {

@@ -62,7 +62,6 @@ export class RoomService {
     }
 
 
-
     async findById(roomId: string): Promise<Room> {
         return this.roomModel.findById(roomId).populate('host participants').exec();
     }
@@ -110,7 +109,13 @@ export class RoomService {
         await room.save();
 
         emails.forEach(async (email) => {
-            await this.inviteService.sendInvitationEmail(email, roomId, room.title, room.host.username);
+            await this.inviteService.sendInvitationEmail({
+                userEmail: email,
+                roomId: roomId,
+                roomName: room.title,
+                inviterMail: room.host.email,
+                inviterName: room.host.username
+            });
         });
 
         return room;
